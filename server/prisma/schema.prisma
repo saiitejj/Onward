@@ -1,0 +1,41 @@
+generator cliend{
+  provider="prisma-client-js"
+}
+
+datasource db{
+  provider="postgresql"
+  url=env("DATABASE_URL")
+  directUrl=env("DIRECT_URL")
+}
+
+
+model User{
+  id Int @id @default(autoincrement())
+  username String @unique
+  password String 
+  createdAt DateTime @default(now())
+
+  habits Habit[]
+  completions HabitCompletion[]
+}
+
+model Habit{
+  id Int @id @default(autoincrement())
+  title String
+  createdAt DateTime @default(now())
+
+  userId Int
+  user User @relation(fields:[userId],references: [id])
+  completions HabitCompletion[]
+}
+
+model HabitCompletion{
+  id Int @id @default(autoincrement())
+  date String
+
+  habitId Int
+  habit Habit @relation(fields:[habitId],references:[id])
+
+  userId Int
+  user User @relation(fields:[userId],references:[id])
+}
