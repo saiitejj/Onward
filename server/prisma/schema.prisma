@@ -23,6 +23,7 @@ model Habit{
   id Int @id @default(autoincrement())
   title String
   createdAt DateTime @default(now())
+  endDate DateTime?
 
   userId Int
   user User @relation(fields:[userId],references: [id])
@@ -38,4 +39,5 @@ model HabitCompletion{
 
   userId Int
   user User @relation(fields:[userId],references:[id])
+  @@unique([habitId, userId, date])
 }

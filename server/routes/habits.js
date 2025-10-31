@@ -83,13 +83,13 @@ router.put('/:id',async (req,res)=>{
     }
 })
 
-router.delete('/:id',async (req,res)=>{
+router.put('/soft-delete/:id',async (req,res)=>{
     try{
-        const habitIdToDelete=parseInt(req.params.id);
+        const habitIdToSoftDelete=parseInt(req.params.id);
         const userIdFromToken=req.user.userId;
         const habit=await prisma.habit.findUnique({
             where:{
-                id:habitIdToDelete,
+                id:habitIdToSoftDelete,
             },
         })
         if (!habit){
@@ -98,10 +98,18 @@ router.delete('/:id',async (req,res)=>{
         if(habit.userId!==userIdFromToken){
             return res.status(403).json({error:"Forbidden: You do not own this habit"})
         }
-        await prisma.habit.delete({
+        if(habit.endDate){
+            return res.status(400).json({error:'Habit already deleted'})
+        }
+
+        const softDeletedHabit=await prisma.habit.update({
             where:{
-                id:habitIdToDelete,
+                id:habitIdToSoftDelete,
             },
+            data:{
+                endDate: new Date(),
+            }
+
         })
         res.status(200).json({message:'Habit deleted successfully'})
     } catch(error){
