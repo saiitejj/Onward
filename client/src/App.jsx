@@ -2,6 +2,8 @@ import React from "react";
 import { Routes,Route } from "react-router-dom";
 import Register from "./pages/Register";
 import LoginPage from "./pages/LoginPage";
+import Dashboard from "./pages/Dashboard";
+import Habits from "./pages/Habits";
 function App(){
   return (
     // <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -14,6 +16,8 @@ function App(){
     <Routes>
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/dash" element={<Dashboard />} />
+      <Route path="/hab" element={<Habits />} />
       <Route path="/" element={<Register />} />
     </Routes>
 
