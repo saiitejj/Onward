@@ -1,8 +1,10 @@
 import React,{useState,useEffect} from "react";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 import axios from "axios";
-import {format} from 'date-fns'
+
+import { format,isToday} from "date-fns";
+
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 
@@ -97,15 +99,34 @@ const fetchDashboard = async (date) => {
                 
                 <div className="md:col-span-2 space-y-6">
                     <div className="bg-white p-8 rounded-xl shadow-md">
-                        <h2 className="text-xl font-bold mb-6 text-gray-800">
-                            Habits for {format(selectedDate, 'MMMM do, yyyy')}
-                        </h2>
+                        <div className="flex justify-between">
+
+                            <h2 className="text-xl font-bold mb-6 text-gray-800">
+                                Habits for {format(selectedDate, 'MMMM do, yyyy')}
+                            </h2>
+                            {isToday(selectedDate)&&(
+                                <Link 
+                                    to="/habits"
+                                    className="flex text-primary-600 mb-6 hover:text-primary-700 font-semibold hover:underline items-center gap-1"
+                                        >
+                                        <span className="text-primary-600">Add Habits</span>
+                                </Link>
+
+                            )}
+                        </div>
 
                         <div className="space-y-3">
                             {habits.length === 0 ? (
                                 <div className="text-center py-10">
                                     <p className="text-gray-500 italic">No habits found for this day.</p>
-                                    <p className="text-sm text-gray-400 mt-2">Go to "Habits" page to create some!</p>
+                                    {isToday(selectedDate) && (
+                                        <button
+                                            onClick={() => navigate('/habits')}
+                                            className="text-primary-600 font-medium mt-2 hover:underline"
+                                        >
+                                            Create one now →
+                                        </button>
+                                    )}
                                 </div>
                             ) : (
                                 habits.map((habit) => (
@@ -118,11 +139,19 @@ const fetchDashboard = async (date) => {
                                                 : 'bg-white border-gray-200'
                                         }`}
                                     >
-                                        <span className={`font-medium ${
-                                            habit.completed ? 'text-green-700' : 'text-gray-700'
-                                        }`}>
-                                            {habit.title}
-                                        </span>
+                                        <div className="flex items-center gap-3">
+                                            <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-colors ${
+                                                habit.completed ? 'bg-green-500 border-green-500' : 'bg-white border-gray-300'
+                                            }`}>
+                                                {habit.completed && <span className="text-white text-xs font-bold">✓</span>}
+                                            </div>
+                                            <span className={`font-medium text-lg ${
+                                                habit.completed ? 'text-green-700 line-through  decoration-green-500/50' : 'text-gray-700'
+                                            }`}>
+                                                {habit.title}
+                                            </span>
+
+                                        </div>
 
                                         <button className={`px-3 py-1 rounded-full text-xs font-bold ${
                                             habit.completed 
