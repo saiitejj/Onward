@@ -19,7 +19,7 @@ const Register=()=>{
     const handleSubmit= async(e)=>{
         e.preventDefault()
         try{
-            await axios.post(`http://localhost:3000/api/auth/register`,formData)
+            await axios.post(`https://onward-api.onrender.com/api/auth/register`,formData)
             alert('Registration Successful! Please login.')
             navigate('/login')
         }

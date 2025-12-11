@@ -20,12 +20,12 @@ const toggleHabit=async (habitId,isCompleted)=>{
         const token=localStorage.getItem('token')
         const dateString=format(selectedDate,'yyyy-MM-dd')
         if(isCompleted){
-            await axios.delete(`http://localhost:3000/api/completions?habitId=${habitId}&date=${dateString}`,{
+            await axios.delete(`https://onward-api.onrender.com/api/completions?habitId=${habitId}&date=${dateString}`,{
                 headers:{Authorization:`Bearer ${token}`}
             })
 
         }else{
-            await axios.post('http://localhost:3000/api/completions', 
+            await axios.post('https://onward-api.onrender.com/api/completions', 
                     { habitId: habitId, date: dateString }, // Body data
                     { headers: { Authorization: `Bearer ${token}` } } // Headers
                 );
@@ -45,7 +45,7 @@ const fetchDashboard = async (date) => {
 
       const dateString = format(date, 'yyyy-MM-dd');
 
-      const response = await axios.get(`http://localhost:3000/api/dashboard?date=${dateString}`, {
+      const response = await axios.get(`https://onward-api.onrender.com/api/dashboard?date=${dateString}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 

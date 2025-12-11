@@ -16,7 +16,7 @@ const Habits=()=>{
         if(!newHabitTitle.trim()) return;
         try{
             const token=localStorage.getItem('token')
-            await axios.post('http://localhost:3000/api/habits',
+            await axios.post('https://onward-api.onrender.com/api/habits',
                 {title:newHabitTitle},
                 {headers:{Authorization:`Bearer ${token}`}}
                 
@@ -35,7 +35,7 @@ const Habits=()=>{
             if(!token){
                 navigate('/login')
             }
-            const response=await axios.get('http://localhost:3000/api/habits',{
+            const response=await axios.get('https://onward-api.onrender.com/api/habits',{
                 headers:{Authorization:`Bearer ${token}`}
             })
             setHabits(response.data)
@@ -47,7 +47,7 @@ const Habits=()=>{
         if(!confirm("Are you sure you want to delete this habit?"))return
         try{
             const token=localStorage.getItem('token')
-            await axios.put(`http://localhost:3000/api/habits/soft-delete/${habitId}`,
+            await axios.put(`https://onward-api.onrender.com/api/habits/soft-delete/${habitId}`,
                 {},
                 {headers:{Authorization:`Bearer ${token}`}}
             )

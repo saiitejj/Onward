@@ -17,7 +17,7 @@ const LoginPage=()=>{
     const handleSubmit=async (e)=>{
         e.preventDefault()
         try{
-            const response=await axios.post('http://localhost:3000/api/auth/login',formData)
+            const response=await axios.post('https://onward-api.onrender.com/api/auth/login',formData)
             localStorage.setItem('token',response.data.token)
             alert('Login Successful! Token Saved.')
             console.log("Server Response: ",response.data)
