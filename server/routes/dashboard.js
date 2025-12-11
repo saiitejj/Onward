@@ -13,6 +13,7 @@ router.get('/',async (req,res)=>{
         const userIdFromToken=req.user.userId;
         const dateFromQuery=req.query.date;
         const queryDate=new Date(dateFromQuery);
+        queryDate.setHours(23,59,59,999)
 
         const habits=await prisma.habit.findMany({
             where:{

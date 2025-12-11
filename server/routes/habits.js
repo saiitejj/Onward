@@ -38,6 +38,7 @@ router.get('/',async (req,res)=>{
         const habits=await prisma.habit.findMany({
             where:{
                 userId:userIdFromToken,
+                endDate:null,
             },
             orderBy:{
                 createdAt:'asc',
