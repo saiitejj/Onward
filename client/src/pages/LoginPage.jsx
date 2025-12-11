@@ -1,11 +1,12 @@
 import React,{useState} from "react";
 import axios from "axios";
-
+import { useNavigate,Link } from "react-router-dom";
 const LoginPage=()=>{
     const [formData,setFormData]=useState({
         username:'',
         password:''
     })
+    const navigate=useNavigate()
 
     const handleChange=(e)=>{
         setFormData({
@@ -19,13 +20,13 @@ const LoginPage=()=>{
         try{
             const response=await axios.post('https://onward-api.onrender.com/api/auth/login',formData)
             localStorage.setItem('token',response.data.token)
-            alert('Login Successful! Token Saved.')
-            console.log("Server Response: ",response.data)
+            alert('Login Successful!')
+            navigate('/dashboard')
 
         }
         catch(error){
             console.error(error)
-            alert('Login Failed :( Please check username/password')
+            alert('Login Failed. Check username/password')
         }
     }
 
