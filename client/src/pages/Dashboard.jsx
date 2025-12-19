@@ -139,11 +139,12 @@ const fetchDashboard = async (date) => {
                                                 toggleHabit(habit.id,habit.completed)
                                             }
                                         }}
-                                        className={`p-4 rounded-lg border flex justify-between items-center cursor-pointer transition-all duration-200 hover:shadow-md ${
+                                        className={`p-4 rounded-lg border flex justify-between items-center  transition-all duration-200 
+                                            ${
                                             habit.completed 
                                                 ? 'bg-green-50 border-green-200' 
                                                 : 'bg-white border-gray-200'
-                                        }`}
+                                        } ${isEditable?'cursor-pointer hover:shadow-md':'cursor-default opacity-80'}`}
                                     >
                                         <div className="flex items-center gap-3">
                                             {(isEditable||habit.completed)?(
