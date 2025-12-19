@@ -72,11 +72,13 @@ const fetchDashboard = async (date) => {
         }
     },[navigate,selectedDate])
 
+    const isEditable=isToday(selectedDate)
+
     const handleLogout=()=>{
         localStorage.removeItem('token')
         navigate('/login')
     }
-
+    
 
 
     return (
@@ -104,12 +106,12 @@ const fetchDashboard = async (date) => {
                             <h2 className="text-xl font-bold mb-6 text-gray-800">
                                 Habits for {format(selectedDate, 'MMMM do, yyyy')}
                             </h2>
-                            {isToday(selectedDate)&&(
+                            {isEditable&&(
                                 <Link 
                                     to="/habits"
                                     className="flex text-primary-600 mb-6 hover:text-primary-700 font-semibold hover:underline items-center gap-1"
                                         >
-                                        <span className="text-primary-600">Add Habits</span>
+                                        <span className="text-primary-600">+ Add New</span>
                                 </Link>
 
                             )}
@@ -132,7 +134,11 @@ const fetchDashboard = async (date) => {
                                 habits.map((habit) => (
                                     <div 
                                         key={habit.id} 
-                                        onClick={()=>toggleHabit(habit.id,habit.completed)}
+                                        onClick={()=>{
+                                            if (isEditable){
+                                                toggleHabit(habit.id,habit.completed)
+                                            }
+                                        }}
                                         className={`p-4 rounded-lg border flex justify-between items-center cursor-pointer transition-all duration-200 hover:shadow-md ${
                                             habit.completed 
                                                 ? 'bg-green-50 border-green-200' 
