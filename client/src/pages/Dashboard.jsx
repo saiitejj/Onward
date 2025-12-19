@@ -146,11 +146,20 @@ const fetchDashboard = async (date) => {
                                         }`}
                                     >
                                         <div className="flex items-center gap-3">
-                                            <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-colors ${
+                                            {(isEditable||habit.completed)?(
+                                                <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-colors ${
                                                 habit.completed ? 'bg-green-500 border-green-500' : 'bg-white border-gray-300'
                                             }`}>
                                                 {habit.completed && <span className="text-white text-xs font-bold">✓</span>}
                                             </div>
+                                            ) : (
+                                                <div className="w-5 h-5 flex items-center justify-center">
+                                                    <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"> </div>
+
+                                                </div>
+
+                                            )}
+                                            
                                             <span className={`font-medium text-lg ${
                                                 habit.completed ? 'text-green-700 line-through  decoration-green-500/50' : 'text-gray-700'
                                             }`}>
