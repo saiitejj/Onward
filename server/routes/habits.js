@@ -17,11 +17,13 @@ router.post('/',async (req,res)=>{
         const newHabitTitle=dataFromClient.title;
 
         const userIdFromToken=req.user.userId;
+        const clientDate = dataFromClient.clientDate;
 
         const newHabit=await prisma.habit.create({
             data:{
                 title:newHabitTitle,
                 userId:userIdFromToken,
+                createdAt: new Date(clientDate),
             }
         })
         res.status(201).json(newHabit);

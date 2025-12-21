@@ -1,6 +1,6 @@
 import axios from "axios";
 import React,{useState,useEffect} from "react";
-
+import {format} from 'date-fns'
 import { useNavigate,Link } from "react-router-dom";
 
 
@@ -17,7 +17,10 @@ const Habits=()=>{
         try{
             const token=localStorage.getItem('token')
             await axios.post('https://onward-api.onrender.com/api/habits',
-                {title:newHabitTitle},
+                {   
+                    title:newHabitTitle,
+                    clientDate: format(new Date(),'yyyy-MM-dd')
+                },
                 {headers:{Authorization:`Bearer ${token}`}}
                 
             )

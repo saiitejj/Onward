@@ -12,8 +12,13 @@ router.get('/',async (req,res)=>{
 
         const userIdFromToken=req.user.userId;
         const dateFromQuery=req.query.date;
-        const queryDate=new Date(dateFromQuery);
-        queryDate.setHours(23,59,59,999)
+
+        const queryDate=new Date(`${dateFromQuery}T23:59:59.999Z`);
+        console.log("------------------------------------------------");
+        console.log(" VIEWING HISTORY FOR:", dateFromQuery);
+        console.log("   -> Filter Limit (UTC):", queryDate.toISOString());
+
+        //  queryDate.setHours(23,59,59,999)
 
         const habits=await prisma.habit.findMany({
             where:{
@@ -36,6 +41,8 @@ router.get('/',async (req,res)=>{
                 createdAt: 'asc',
             },
         })
+        console.log(`   -> Found ${habits.length} habits active on this date.`);
+
         const completions=await prisma.habitCompletion.findMany({
             where:{
                 userId:userIdFromToken,
